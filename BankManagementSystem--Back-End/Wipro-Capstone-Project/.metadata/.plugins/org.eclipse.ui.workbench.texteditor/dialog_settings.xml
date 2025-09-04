@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="hasShownOverlayPopupBefore" value="true"/>
+	<section name="java.lang.Class">
+		<item key="replaceBarOpen" value="true"/>
+		<list key="findhistory">
+			<item value="include"/>
+			<item value="user"/>
+			<item value="failed"/>
+			<item value="bind"/>
+			<item value="webflux"/>
+			<item value="8761"/>
+			<item value="sleuth"/>
+			<item value="eureka"/>
+			<item value="zipkin"/>
+			<item value="feign"/>
+			<item value="webmvc"/>
+			<item value="security"/>
+			<item value=".bank.service."/>
+			<item value=".example.auditservice."/>
+			<item value="lombok"/>
+		</list>
+		<list key="replacehistory">
+			<item value=".bank.audit."/>
+			<item value=".bank.service."/>
+		</list>
+	</section>
+</section>

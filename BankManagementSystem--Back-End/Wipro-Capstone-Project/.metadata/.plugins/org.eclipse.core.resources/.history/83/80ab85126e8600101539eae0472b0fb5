@@ -1,0 +1,14 @@
+package com.bank.notification.feign;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
+
+@FeignClient(name = "account-service", url = "http://localhost:8082/accounts")
+public interface AccountFeignClient {
+
+    @PostMapping("/debit")
+    String debitAccount(@RequestParam String accountNumber, @RequestParam Double amount);
+
+    @PostMapping("/credit")
+    String creditAccount(@RequestParam String accountNumber, @RequestParam Double amount);
+}

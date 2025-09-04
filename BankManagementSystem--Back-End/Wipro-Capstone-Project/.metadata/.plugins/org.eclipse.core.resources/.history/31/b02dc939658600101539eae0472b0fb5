@@ -1,0 +1,19 @@
+package com.bank.payment.service;
+
+import org.springframework.stereotype.Service;
+
+import com.example.notification.dto.NotificationRequest;
+import com.example.notification.dto.NotificationResponse;
+
+@Service
+public class NotificationService {
+
+    public NotificationResponse sendNotification(NotificationRequest request) {
+        // For now, just simulate sending
+        String log = "Notification sent to " + request.getRecipient() +
+                     " with message: " + request.getMessage();
+        System.out.println(log);
+
+        return new NotificationResponse("SUCCESS", log);
+    }
+}

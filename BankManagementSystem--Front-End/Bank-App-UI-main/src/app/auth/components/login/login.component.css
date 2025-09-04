@@ -1,0 +1,11 @@
+.auth-card {
+  max-width: 380px;
+  margin: 56px auto;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  background: #fff;
+}
+.w100 { width: 100%; }
+.mt { margin-top: 12px; }
+.err { color: #c62828; margin-top: 8px; }

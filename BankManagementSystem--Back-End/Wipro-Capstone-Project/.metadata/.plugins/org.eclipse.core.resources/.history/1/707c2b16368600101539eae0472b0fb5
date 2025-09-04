@@ -1,0 +1,45 @@
+package com.bank.account.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.bank.account.dto.KycRequest;
+import com.bank.account.entity.Customer;
+import com.bank.account.service.CustomerService;
+
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/customers")
+public class CustomerController {
+
+    private final CustomerService service;
+
+    public CustomerController(CustomerService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer) {
+        return ResponseEntity.ok(service.saveCustomer(customer));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+        Optional<Customer> customer = service.getCustomerById(id);
+        return customer.map(ResponseEntity::ok)
+                       .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    
+    @PatchMapping("/{contactId}/kyc")
+    public ResponseEntity<String> updateKycStatus(@PathVariable Long contactId,
+                                                  @RequestBody KycRequest request) {
+        boolean updated = service.updateKycStatus(contactId, request.getAddressProof(), request.getBirthCertificate());
+        System.out.println(" ENtered >>>> ");
+        if (updated) {
+            return ResponseEntity.ok("KYC status updated to completed.");
+        } else {
+            return ResponseEntity.badRequest().body("KYC validation failed. Name or address did not match.");
+        }
+    }
+}

@@ -1,0 +1,51 @@
+package com.bank.customer.service;
+
+import org.springframework.stereotype.Service;
+
+import com.bank.account.entity.Customer;
+import com.bank.account.repository.CustomerRepository;
+
+import java.util.Optional;
+
+@Service
+public class CustomerService {
+
+    private final CustomerRepository repository;
+
+    public CustomerService(CustomerRepository repository) {
+        this.repository = repository;
+    }
+
+    public Customer saveCustomer(Customer customer) {
+        return repository.save(customer);
+    }
+
+    public Optional<Customer> getCustomerById(Long id) {
+        return repository.findById(id);
+    }
+    public boolean updateKycStatus(Long contactId, String addressProof, String birthCertificate) {
+        Optional<Customer> optionalCustomer = repository.findById(contactId);
+        System.out.println("Entered");
+
+        if (optionalCustomer.isPresent()) {
+            Customer customer = optionalCustomer.get();
+            String checkName = customer.getName().toLowerCase();
+            String checkAddress = customer.getAddress().toLowerCase();
+            boolean isBirthValid = birthCertificate != null && birthCertificate.contains(checkName);
+            boolean isAddressValid = addressProof != null && addressProof.contains(checkAddress);
+            
+            System.out.println(isAddressValid);
+            System.out.println(isBirthValid);
+            
+            if (isBirthValid && isAddressValid) {
+                customer.setKycStatus("completed");
+                repository.save(customer);
+                return true;
+            }else {
+            	customer.setKycStatus("not_completed");
+                repository.save(customer);
+            }
+        }
+        return false;
+    }
+}

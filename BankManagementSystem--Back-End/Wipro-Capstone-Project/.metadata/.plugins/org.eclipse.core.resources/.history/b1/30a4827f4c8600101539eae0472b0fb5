@@ -1,0 +1,46 @@
+package com.wipro.gp.controller;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
+
+import com.wipro.gp.entities.Patient;
+import com.wipro.gp.service.PatientService;
+
+import jakarta.validation.Valid;
+
+@RequiredArgsConstructor
+@Slf4j
+@RestController
+@RequestMapping("/api/v1/patients")
+public class PatientController {
+
+	private final PatientService patientService;
+
+	@PostMapping("/save")
+	public Patient registerPatient(@Valid @RequestBody Patient patient) {
+		log.info("Received request to add a patient details");
+		return patientService.registerPatient(patient);
+	}
+
+	@GetMapping("/id/{id}")
+	public Patient getPatientById(@PathVariable Long id) {
+		log.info("Received request to get details of patient by id");
+		return patientService.getPatient(id);
+	}
+
+	@PatchMapping("/patch/{id}")
+	public Patient updatePatient(@PathVariable Long id, @RequestBody Patient patient) {
+		log.info("Received request to update patient details");
+		return patientService.updatePatient(id, patient);
+	}
+
+	@GetMapping("/search")
+	public Page<Patient> searchPatientsByName(@RequestParam String patientFullName, Pageable pageable) {
+		log.info("Received request to get patient details by name");
+		return patientService.searchPatientsByName(patientFullName, pageable);
+	}
+}

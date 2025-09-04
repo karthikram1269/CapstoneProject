@@ -1,0 +1,46 @@
+package com.bank.account.service;
+
+import com.bank.account.dto.CustomerResponse;
+import com.bank.account.entity.Account;
+import com.bank.account.repository.AccountRepository;
+import com.bank.account.feign.CustomerClient;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class AccountService {
+
+    private final AccountRepository repository;
+    private final CustomerClient customerClient;
+
+    public AccountService(AccountRepository repository, CustomerClient customerClient) {
+        this.repository = repository;
+        this.customerClient = customerClient;
+    }
+
+    public Account saveAccount(Account account) {
+        CustomerResponse customer = customerClient.getCustomerById(account.getCustomerId());
+        if (customer == null || customer.getKyc() == "false") {
+            throw new RuntimeException("Customer KYC not completed. Cannot create account.");
+        }
+        return repository.save(account);
+    }
+
+    public Optional<Account> getAccountById(Long id) {
+        return repository.findById(id);
+    }
+
+    public Optional<Account> getAccountByAadhar(String aadhar) {
+        return repository.findByAadharCardNumber(aadhar);
+    }
+
+    public Optional<Account> getAccountByBankNumber(String bankNumber) {
+        return repository.findByBankAccountNumber(bankNumber);
+    }
+
+    public List<Account> getAllAccounts() {
+        return repository.findAll();
+    }
+}

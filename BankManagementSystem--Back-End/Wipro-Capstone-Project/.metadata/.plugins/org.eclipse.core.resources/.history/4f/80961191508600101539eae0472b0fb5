@@ -1,0 +1,56 @@
+package com.bank.account.controller;
+
+import com.bank.account.entity.Account;
+import com.bank.account.service.AccountService;
+
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@Slf4j
+@RestController
+@RequestMapping("/api/accounts")
+public class AccountController {
+
+    private final AccountService service;
+
+    public AccountController(AccountService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public ResponseEntity<Account> saveAccount(@RequestBody Account account) {
+    	log.info("Received request to add a account details of customer : "+account.getUserName());
+        return ResponseEntity.ok(service.saveAccount(account));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Account> getAccountById(@PathVariable Long id) {
+        Optional<Account> account = service.getAccountById(id);
+        return account.map(ResponseEntity::ok)
+                      .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/aadhar/{aadhar}")
+    public ResponseEntity<Account> getAccountByAadhar(@PathVariable String aadhar) {
+        return service.getAccountByAadhar(aadhar)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/bank/{bankNumber}")
+    public ResponseEntity<Account> getAccountByBankNumber(@PathVariable String bankNumber) {
+        return service.getAccountByBankNumber(bankNumber)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Account>> getAllAccounts() {
+        return ResponseEntity.ok(service.getAllAccounts());
+    }
+}

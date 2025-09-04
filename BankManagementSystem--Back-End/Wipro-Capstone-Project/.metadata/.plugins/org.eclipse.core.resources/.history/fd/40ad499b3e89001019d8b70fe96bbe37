@@ -1,0 +1,109 @@
+spring.application.name=USER-AUTHENTICATION-SERVICE
+server.port=8087
+spring.datasource.url=jdbc:mysql://localhost:3306/jwt_db?createDatabaseIfNotExist=true
+spring.datasource.username=root
+spring.datasource.password=KaDB@1269
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+
+logging.file.path=Logging-File/app.log
+logging.level.root=info
+spring.jpa.properties.hibernate.format_sql=true
+
+
+
+
+
+# Let Spring's TransactionManager control commit/rollback cleanly
+#don’t auto-save, let Spring handle commits/rollbacks
+#spring.jpa.properties.hibernate.connection.provider_disables_autocommit=true
+
+
+# Helpful while learning/diagnosing
+logging.level.org.springframework.transaction=DEBUG
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.transaction=TRACE
+
+
+
+
+# Config Server URL
+spring.config.import=configserver:http://localhost:9094
+
+# ===============================
+# SPRINGDOC SWAGGER CONFIGURATION
+# ===============================
+
+# Custom path for Swagger UI
+springdoc.swagger-ui.path=/swagger-ui.html
+
+# Custom path for API Docs
+#springdoc.api-docs.path=/api-docs
+
+# Enable Swagger UI
+springdoc.swagger-ui.enabled=true
+
+# Enable API docs
+springdoc.api-docs.enabled=true
+
+# Show all actuator endpoints in Swagger (if actuator is used)
+springdoc.show-actuator=true
+
+# Base paths (all APIs under these will be included)
+springdoc.paths-to-match=/**
+
+
+# ===============================
+# LOGGING (Optional, for debugging)
+# ===============================
+logging.level.org.springdoc=DEBUG
+logging.level.org.springframework.web=DEBUG
+
+# ===============================
+# Eureka Config
+# ===============================
+eureka.instance.prefer-ip-address=true
+eureka.instance.hostname=localhost
+eureka.client.fetch-registry=true
+eureka.client.register-with-eureka=true
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+
+
+
+# ===============================
+# Distributed Tracing
+# ===============================
+management.tracing.sampling.probability=1.0
+management.zipkin.tracing.endpoint=http://localhost:9411/api/v2/spans
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} [%X{traceId:-},%X{spanId:-}] - %msg%n
+management.tracing.enabled=true
+management.zipkin.tracing.enabled=true
+management.tracing.baggage.remote-fields=service-name
+spring.cloud.compatibility-verifier.enabled=false
+
+
+management.endpoints.web.exposure.include=health,info,prometheus
+management.prometheus.metrics.export.enabled=true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

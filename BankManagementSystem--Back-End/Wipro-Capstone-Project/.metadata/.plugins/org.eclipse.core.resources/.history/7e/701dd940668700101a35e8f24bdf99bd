@@ -1,0 +1,5 @@
+package com.bank.payment.kafka;
+
+public class NotificationProducer {
+
+}

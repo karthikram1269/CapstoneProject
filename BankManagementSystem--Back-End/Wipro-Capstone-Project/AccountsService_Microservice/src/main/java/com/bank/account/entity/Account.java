@@ -1,0 +1,34 @@
+package com.bank.account.entity;
+
+import com.bank.account.enums.AccountType;
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "accounts")
+public class Account {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long accountId;
+
+    private String userName;
+    
+    private String panCardNumber;
+    
+    private String aadharCardNumber;
+    
+    @Column(unique = true)
+    private String bankAccountNumber;
+
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
+
+    private String password;
+    private Double balance;
+
+    private Long customerId; // reference to customer
+}

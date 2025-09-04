@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-title>All Payments</mat-card-title>
+  <mat-card-content>
+    <table mat-table [dataSource]="payments" class="mat-elevation-z1 full-width">
+      <ng-container matColumnDef="id"><th mat-header-cell *matHeaderCellDef>ID</th><td mat-cell *matCellDef="let p">{{p.id}}</td></ng-container>
+      <ng-container matColumnDef="fromBankNumber"><th mat-header-cell *matHeaderCellDef>From</th><td mat-cell *matCellDef="let p">{{p.fromBankNumber}}</td></ng-container>
+      <ng-container matColumnDef="toBankNumber"><th mat-header-cell *matHeaderCellDef>To</th><td mat-cell *matCellDef="let p">{{p.toBankNumber}}</td></ng-container>
+      <ng-container matColumnDef="amount"><th mat-header-cell *matHeaderCellDef>Amount</th><td mat-cell *matCellDef="let p">{{p.amount}}</td></ng-container>
+      <ng-container matColumnDef="status"><th mat-header-cell *matHeaderCellDef>Status</th><td mat-cell *matCellDef="let p">{{p.status}}</td></ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>

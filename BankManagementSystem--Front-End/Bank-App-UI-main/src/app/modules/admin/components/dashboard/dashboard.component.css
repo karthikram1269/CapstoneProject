@@ -1,0 +1,5 @@
+.wrap { padding: 16px; }
+section { margin-top: 18px; }
+.full { width: 100%; }
+.chip { padding: 2px 8px; border-radius: 12px; background:#eee; }
+.chip.ok { background:#e6f4ea; color:#1e7e34; }

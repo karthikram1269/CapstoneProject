@@ -1,0 +1,25 @@
+package com.bank.notification.kafka;
+
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
+
+import com.bank.notification.dto.NotificationRequest;
+import com.bank.notification.service.EmailNotificationService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class PaymentConsumer {
+	
+	private final EmailNotificationService service;
+	
+	@KafkaListener(topics = "notify-payment", groupId = "payment-mail-v2")
+    public void consume(NotificationRequest request) {
+      log.warn(" Received Payment: {}" , request);
+        service.sendToBoth(request);
+    }
+
+}

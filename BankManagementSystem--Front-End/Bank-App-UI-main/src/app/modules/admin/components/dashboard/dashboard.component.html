@@ -1,0 +1,26 @@
+<app-admin-nav></app-admin-nav>
+
+<div class="dashboard-container" fxLayout="column" fxLayoutAlign="center center">
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Admin Dashboard</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="btn-grid" fxLayout="row wrap" fxLayoutGap="16px">
+        <button mat-raised-button color="primary" [routerLink]="['/customers']">
+          Manage Customers
+        </button>
+        <button mat-raised-button color="accent" [routerLink]="['/accounts']">
+          Manage Accounts
+        </button>
+        <button mat-raised-button color="warn" [routerLink]="['/payments']">
+          View Payments
+        </button>
+        <button mat-raised-button color="primary" [routerLink]="['/audit']">
+          View Audit
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

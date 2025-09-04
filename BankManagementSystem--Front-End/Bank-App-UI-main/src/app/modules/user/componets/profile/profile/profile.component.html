@@ -1,0 +1,36 @@
+<!-- <div class="wrap">
+  <h2>Profile & KYC</h2>
+
+  <form [formGroup]="form" (ngSubmit)="loadProfile()" class="grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Customer ID</mat-label>
+      <input matInput type="number" formControlName="id" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Aadhar</mat-label>
+      <input matInput formControlName="aadhar" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary">Load Profile</button>
+
+    <mat-form-field appearance="outline">
+      <mat-label>PAN (for KYC)</mat-label>
+      <input matInput formControlName="pan" />
+    </mat-form-field>
+    <button mat-stroked-button type="button" (click)="updateKyc()">Update KYC</button>
+  </form>
+
+  <p class="ok" *ngIf="message">{{ message }}</p>
+  <p class="err" *ngIf="error">{{ error }}</p>
+
+  <mat-card *ngIf="profile" class="mt">
+    <mat-card-title>{{ profile.name }}</mat-card-title>
+    <mat-card-content>
+      <p><b>Email:</b> {{ profile.email }}</p>
+      <p><b>Mobile:</b> {{ profile.mobileNumber }}</p>
+      <p><b>Address:</b> {{ profile.address }}</p>
+      <p><b>KYC:</b> {{ profile.kyc }}</p>
+    </mat-card-content>
+  </mat-card>
+</div> -->

@@ -1,0 +1,87 @@
+package com.bank.account.controller;
+
+import com.bank.account.entity.Account;
+import com.bank.account.service.AccountService;
+
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Slf4j
+@RestController
+@RequestMapping("/api/accounts")
+public class AccountController {
+
+    private final AccountService service;
+
+    public AccountController(AccountService service) {
+        this.service = service;
+    }
+
+//    @CircuitBreaker(name = "createAccount", fallbackMethod = "fallBackMethodForCreateAccount")
+//	@Retry(name = "createAccount")                          // Retry configured for the same instance "createQuiz"
+//    @RateLimiter(name = "createAccount")  
+    @PostMapping("/add")
+    public ResponseEntity<Account> saveAccount(@RequestBody Account account) {
+    	log.info("Received request to add a account details of customer : "+account.getUserName());
+        return ResponseEntity.ok(service.saveAccount(account));
+    }
+    
+//    public Account fallBackMethodForCreateAccount(String category, String level, String title, Throwable throwable) {
+//	    log.warn("Fallback triggered for createQuiz: {}", throwable.getMessage());
+//	    Account fallbackQuiz = new Account();
+//	    fallbackQuiz.setUserName("Question server is down please try later - Service Unavailable");
+//	    return fallbackQuiz;
+//	}
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Account> getAccountById(@PathVariable Long id) {
+        log.info("Received request to get account details of customer id :" + id);
+        Account account = service.getAccountById(id);
+        return ResponseEntity.ok(account);
+    }
+
+
+    @GetMapping("/aadhar/{aadhar}")
+    public ResponseEntity<Account> getAccountByAadhar(@PathVariable String aadhar) {
+    	log.info("Received request to get account details by aadhar "+aadhar);
+        return service.getAccountByAadhar(aadhar)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/bank/{bankNumber}")
+    public ResponseEntity<Account> getAccountByBankNumber(@PathVariable String bankNumber) {
+    	log.info("Received request to get account details by bank account number");
+        return service.getAccountByBankNumber(bankNumber)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Account>> getAllAccounts() {
+    	log.info("Received request to get all account details");
+        return ResponseEntity.ok(service.getAllAccounts());
+    }
+    
+    @PostMapping("/bank/{bankNumber}/debit")
+    public ResponseEntity<String> debitByBankNumber(
+            @PathVariable String bankNumber,
+            @RequestParam Double amount) {
+        log.info("Debiting {} from account {}", amount, bankNumber);
+        service.debitByBankNumber(bankNumber, amount);
+        return ResponseEntity.ok("Debited " + amount + " from account " + bankNumber);
+    }
+
+    @PostMapping("/bank/{bankNumber}/credit")
+    public ResponseEntity<String> creditByBankNumber(
+            @PathVariable String bankNumber,
+            @RequestParam Double amount) {
+        log.info("Crediting {} to account {}", amount, bankNumber);
+        service.creditByBankNumber(bankNumber, amount);
+        return ResponseEntity.ok("Credited " + amount + " to account " + bankNumber);
+    }
+}

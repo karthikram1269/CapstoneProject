@@ -1,0 +1,8 @@
+package snippet;
+
+public class Snippet {
+	public static void main(String[] args) {
+		log.info("Received request to add a customer details");
+	}
+}
+

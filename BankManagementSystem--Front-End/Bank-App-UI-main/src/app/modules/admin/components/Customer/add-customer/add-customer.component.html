@@ -1,0 +1,14 @@
+<mat-card>
+  <mat-card-title>Add Customer</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline"><mat-label>Name</mat-label><input matInput formControlName="name"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Email</mat-label><input matInput formControlName="email"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Phone</mat-label><input matInput formControlName="phone"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Aadhar</mat-label><input matInput formControlName="aadhar"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>PAN</mat-label><input matInput formControlName="pan"></mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="customerForm.invalid">Add</button>
+    </form>
+    <p>{{ message }}</p>
+  </mat-card-content>
+</mat-card>

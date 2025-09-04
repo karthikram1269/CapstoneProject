@@ -1,0 +1,80 @@
+spring.application.name=API-GateWay
+server.port=8765
+spring.config.import=configserver:http://localhost:9094
+
+
+# ===============================
+# SPRINGDOC SWAGGER CONFIGURATION
+# ===============================
+
+# Custom path for Swagger UI
+springdoc.swagger-ui.path=/swagger-ui.html
+
+# Custom path for API Docs
+#springdoc.api-docs.path=/api-docs
+
+# Enable Swagger UI
+springdoc.swagger-ui.enabled=true
+
+# Enable API docs
+springdoc.api-docs.enabled=true
+
+# Show all actuator endpoints in Swagger (if actuator is used)
+springdoc.show-actuator=true
+
+# Base paths (all APIs under these will be included)
+springdoc.paths-to-match=/**
+
+
+# ===============================
+# LOGGING (Optional, for debugging)
+# ===============================
+logging.level.org.springdoc=DEBUG
+logging.level.org.springframework.web=DEBUG
+
+# ===============================
+# Eureka Config
+# ===============================
+eureka.instance.prefer-ip-address=true
+eureka.instance.hostname=localhost
+eureka.client.fetch-registry=true
+eureka.client.register-with-eureka=true
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+
+
+
+# ===============================
+# Distributed Tracing
+# ===============================
+management.tracing.sampling.probability=1.0
+management.zipkin.tracing.endpoint=http://localhost:9411/api/v2/spans
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} [%X{traceId:-},%X{spanId:-}] - %msg%n
+management.tracing.enabled=true
+management.zipkin.tracing.enabled=true
+management.tracing.baggage.remote-fields=service-name
+spring.cloud.compatibility-verifier.enabled=false
+
+
+#spring.cloud.gateway.server.webflux.discovery.locator.enabled=false
+spring.cloud.gateway.server.webflux.discovery.locator.lower-case-service-id=true
+
+
+spring.cloud.gateway.server.webflux.routes[0].id=customer-service-route
+spring.cloud.gateway.server.webflux.routes[0].uri=lb://customer-service
+spring.cloud.gateway.server.webflux.routes[0].predicates[0]=Path=/api/customers/**
+
+spring.cloud.gateway.server.webflux.routes[1].id=account-service-route
+spring.cloud.gateway.server.webflux.routes[1].uri=lb://account-service
+spring.cloud.gateway.server.webflux.routes[1].predicates[0]=Path=/api/accounts/**
+
+spring.cloud.gateway.server.webflux.routes[2].id=userauth-service-route
+spring.cloud.gateway.server.webflux.routes[2].uri=lb://USER-AUTHENTICATION-SERVICE
+spring.cloud.gateway.server.webflux.routes[2].predicates[0]=Path=/api/auth/**
+
+
+
+# Disable default route configuration as we're using a custom configuration
+spring.cloud.gateway.server.webflux.discovery.locator.enabled=false
+
+# JWT Configuration
+jwt.secret=26c4cbf903245338881de345222de9e59082fbfd9fd4dd1b198dd734a53d89d0

@@ -1,0 +1,4 @@
+.wrap { padding: 16px; }
+.grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:12px; align-items:end; }
+.full { width:100%; } .mt { margin-top:16px; }
+.ok { color:#2e7d32; } .err { color:#c62828; }

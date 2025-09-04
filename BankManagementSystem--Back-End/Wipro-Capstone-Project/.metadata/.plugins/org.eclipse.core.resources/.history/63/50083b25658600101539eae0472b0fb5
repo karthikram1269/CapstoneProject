@@ -1,0 +1,9 @@
+package com.bank.payment.service;
+
+
+import com.bank.payment.dto.PaymentRequest;
+import com.bank.payment.entity.Payment;
+
+public interface PaymentService {
+    Payment doPayment(PaymentRequest request);
+}

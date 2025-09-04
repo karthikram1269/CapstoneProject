@@ -1,0 +1,33 @@
+package com.bank.notification.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.bank.notification.dto.NotificationRequest;
+import com.bank.notification.service.EmailNotificationService;
+
+@RestController
+@RequestMapping("/api/notifications")
+public class NotificationController {
+
+    private final EmailNotificationService service;
+
+    public NotificationController(EmailNotificationService service) {
+        this.service = service;
+    }
+
+    @PostMapping("/send-both")
+    public ResponseEntity<String> sendToBoth(@RequestBody NotificationRequest req) {
+        try {
+            String res = service.sendToBoth(req);
+            return ResponseEntity.ok(res);
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).body("Failed to send emails: " + ex.getMessage());
+        }
+    }
+
+    @PostMapping("/send-direct")
+    public ResponseEntity<String> sendDirect(@RequestBody NotificationRequest req) {
+        return sendToBoth(req);
+    }
+}
